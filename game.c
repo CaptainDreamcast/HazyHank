@@ -13,9 +13,16 @@ CharacterData characterData;
 GameReturnType gameLogic(){
 
 	log("Enter game logic");
+	GameReturnType returnType;
 	loadAllTextures();
-	loadGame(&worldData, &characterData);
-	GameReturnType returnType = gameScreen(&worldData, &characterData);
+
+	while(1){
+		memset(&worldData, 0, sizeof worldData);
+		memset(&characterData, 0, sizeof characterData);
+		loadGame(&worldData, &characterData);
+		returnType = gameScreen(&worldData, &characterData);
+		if(returnType == RETURN_TO_MENU) break;
+	}
 	unloadAllTextures();
 	return returnType;
 }
