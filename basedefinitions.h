@@ -36,4 +36,7 @@
 
 #define GRAVITY 1
 
+#define PRESS_START_X 212
+#define PRESS_START_Y 290
+
 #endif
