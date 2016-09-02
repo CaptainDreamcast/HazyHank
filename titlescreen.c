@@ -20,6 +20,7 @@ GameReturnType checkDone(){
 
 GameReturnType title(){
 
+	getInput();
 	if(hasPressedAbortFlank()) {
 		return RETURN_TO_MENU;
 	}

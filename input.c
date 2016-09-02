@@ -2,6 +2,8 @@
 
 #include <kos.h>
 
+#include "log.h"
+
 maple_device_t* gCont;
 cont_state_t* gState;
 
@@ -37,6 +39,9 @@ int hasPressedAbort(){
 
 int hasPressedFlank(int tCurrent, int* tFlank){
 	int returnValue = 0;
+
+	debugInteger(tCurrent);
+	debugInteger((*tFlank));
 	if(tCurrent && !(*tFlank)) {
 		returnValue = 1;
 	}
@@ -47,6 +52,7 @@ int hasPressedFlank(int tCurrent, int* tFlank){
 
 int gAbortFlank = 0;
 int hasPressedAbortFlank(){
+	debugLog("check abort flank");
 	return hasPressedFlank(hasPressedAbort(), &gAbortFlank);
 }
 
