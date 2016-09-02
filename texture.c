@@ -8,6 +8,8 @@ TextureData gCharacter[2];
 TextureData gEnemy[2];
 TextureData gExit;
 TextureData gPlatform;
+TextureData gTitle;
+TextureData gPressStart;
 
 void loadTexture(char tPath[], pvr_ptr_t* tTexture, TextureSize* tTextureSize){
 	tTextureSize->x = 0;
@@ -57,16 +59,30 @@ void unloadCharacterTextures(){
 	unloadTexture(gCharacter[1]);
 }
 
+void loadTitleTextures(){
+	log("Load title textures");
+	loadTexture("/rd/sprites/title.pkg", &gTitle.texture, &gTitle.textureSize);
+	loadTexture("/rd/sprites/press_start.pkg", &gPressStart.texture, &gPressStart.textureSize);
+}
+
+void unloadTitleTextures(){
+	log("Unoad title textures");
+	unloadTexture(gTitle);
+	unloadTexture(gPressStart);
+}
+
 void loadAllTextures(){
 	loadWorldTextures();
 	loadEnemyTextures();
 	loadCharacterTextures();
+	loadTitleTextures();
 }
 
 void unloadAllTextures(){
 	unloadWorldTextures();
 	unloadEnemyTextures();
 	unloadCharacterTextures();
+	unloadTitleTextures();
 }
 
 TextureData getBackgroundTexture(){
@@ -87,5 +103,13 @@ TextureData getExitTexture(){
 
 TextureData getPlatformTexture(){
 	return gPlatform;
+}
+
+TextureData getTitleTexture(){
+	return gTitle;
+}
+
+TextureData getPressStartTexture(){
+	return gPressStart;
 }
 

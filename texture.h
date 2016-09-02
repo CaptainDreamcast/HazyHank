@@ -13,7 +13,9 @@ typedef struct{
 
 void loadAllTextures();
 void unloadAllTextures();
-
+ 
+TextureData getTitleTexture();
+TextureData getPressStartTexture();
 TextureData getBackgroundTexture();
 TextureData getCharacterTexture(int tFrame);
 TextureData getEnemyTexture(int tFrame);
