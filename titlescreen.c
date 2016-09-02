@@ -3,11 +3,29 @@
 #include "titledata.h"
 #include "drawing.h"
 #include "input.h"
+#include "tmath.h"
+
+#include "log.h"
+
+#define TITLE_TILT_ACCELERATION 0.001
+#define TITLE_TILT_VELOCITY_MAX	0.02
 
 TitleData gTitleData;
 
 void calculateTilt(){
+	gTitleData.tiltVelocity += gTitleData.tiltAcceleration;
 
+	if(gTitleData.tiltVelocity > TITLE_TILT_VELOCITY_MAX) gTitleData.tiltVelocity = TITLE_TILT_VELOCITY_MAX;	
+	if(gTitleData.tiltVelocity < -TITLE_TILT_VELOCITY_MAX) gTitleData.tiltVelocity = -TITLE_TILT_VELOCITY_MAX;	
+
+	gTitleData.tiltAngle += gTitleData.tiltVelocity;
+
+	debugDouble(gTitleData.tiltAngle);
+	if(	(gTitleData.tiltAngle < -0.5 && gTitleData.tiltAcceleration < 0) || 	
+		(gTitleData.tiltAngle > 0.5 && gTitleData.tiltAcceleration > 0)) { 
+		debugLog("switch tilt direction");
+		gTitleData.tiltAcceleration *= -1;
+	}
 }
 
 GameReturnType checkDone(){
@@ -35,7 +53,7 @@ GameReturnType title(){
 }
 
 void initiateTitle(){
-
+	gTitleData.tiltAcceleration = TITLE_TILT_ACCELERATION;
 }
 
 GameReturnType titleScreen(){
