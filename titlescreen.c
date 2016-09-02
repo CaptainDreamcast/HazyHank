@@ -15,9 +15,12 @@ TitleData gTitleData;
 void calculateTilt(){
 	gTitleData.tiltVelocity += gTitleData.tiltAcceleration;
 
-	if(gTitleData.tiltVelocity > TITLE_TILT_VELOCITY_MAX) gTitleData.tiltVelocity = TITLE_TILT_VELOCITY_MAX;	
-	if(gTitleData.tiltVelocity < -TITLE_TILT_VELOCITY_MAX) gTitleData.tiltVelocity = -TITLE_TILT_VELOCITY_MAX;	
-
+	if(gTitleData.tiltVelocity > TITLE_TILT_VELOCITY_MAX) {
+		gTitleData.tiltVelocity = TITLE_TILT_VELOCITY_MAX;	
+	}
+	else if(gTitleData.tiltVelocity < -TITLE_TILT_VELOCITY_MAX) {
+		gTitleData.tiltVelocity = -TITLE_TILT_VELOCITY_MAX;
+	}	
 	gTitleData.tiltAngle += gTitleData.tiltVelocity;
 
 	debugDouble(gTitleData.tiltAngle);
@@ -37,7 +40,6 @@ GameReturnType checkDone(){
 }
 
 GameReturnType title(){
-
 	getInput();
 	if(hasPressedAbortFlank()) {
 		return RETURN_TO_MENU;
