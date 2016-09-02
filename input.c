@@ -2,6 +2,8 @@
 
 #include <kos.h>
 
+#include "log.h"
+
 maple_device_t* gCont;
 cont_state_t* gState;
 
@@ -33,4 +35,33 @@ int hasPressedAbort(){
 
 	uint32_t exitCode = (CONT_A | CONT_B | CONT_X | CONT_Y | CONT_START);
 	return ((gState->buttons & exitCode) == exitCode);
+}
+
+int hasPressedFlank(int tCurrent, int* tFlank){
+	int returnValue = 0;
+
+	debugInteger(tCurrent);
+	debugInteger((*tFlank));
+	if(tCurrent && !(*tFlank)) {
+		returnValue = 1;
+	}
+
+	(*tFlank) = tCurrent;
+	return returnValue;	
+}
+
+int gAbortFlank = 0;
+int hasPressedAbortFlank(){
+	debugLog("check abort flank");
+	return hasPressedFlank(hasPressedAbort(), &gAbortFlank);
+}
+
+int hasPressedStart(){
+	if(!gState) return 0;
+
+	return (gState->buttons & CONT_START);
+}
+int gStartFlank = 0;
+int hasPressedStartFlank(){
+	return hasPressedFlank(hasPressedStart(), &gStartFlank);
 }

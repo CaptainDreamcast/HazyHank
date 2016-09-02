@@ -100,7 +100,7 @@ void generateEnemies(){
 
 	int enemiesToBePlaced = (rand()%MAX_ENEMY_AMOUNT)+1;
 
-	debugInteger(enemiesToBePlaced);
+	logInteger(enemiesToBePlaced);
 
 	int j, i;
 	int keepPlacingEnemies = 1;
@@ -225,6 +225,8 @@ void generateLevel(WorldData* tWorldData){
 	do{		
 		attempt++;
 		logInteger(attempt);
+
+		memset(tWorldData, 0, sizeof *tWorldData);
 
 		generatePlatforms();
 		generateEnemies();

@@ -1,6 +1,6 @@
 TARGET = 1ST_READ
 OBJS = romdisk.o main.o game.o gamescreen.o loadgame.o generateLevel.o input.o physics.o collision.o state.o animation.o \
-movement.o stagelogic.o drawing.o texture.o \
+movement.o stagelogic.o drawing.o texture.o titlescreen.o \
 quicklz.o pkg.o pvr.o
 OPTFLAGS=-O3 -fomit-frame-pointer -fno-delayed-branch -DDREAMCAST -Wall -Werror
 KOS_CFLAGS+= $(OPTFLAGS)
@@ -18,7 +18,7 @@ clean:
 	-rm -f $(TARGET).BIN
 	-rm -f $(SOURCE_PKGS)
 	-rm -f assets/sprites/*.pkg
-	-rm -f assets/romdisk_boot/*.pkg
+	-rm -f romdisk_boot/sprites/*.pkg
 	-rm -f romdisk.img
 
 $(TARGET).elf: $(OBJS) 
