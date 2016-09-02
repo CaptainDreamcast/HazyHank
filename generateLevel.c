@@ -226,6 +226,8 @@ void generateLevel(WorldData* tWorldData){
 		attempt++;
 		logInteger(attempt);
 
+		memset(tWorldData, 0, sizeof *tWorldData);
+
 		generatePlatforms();
 		generateEnemies();
 		generateExit();
