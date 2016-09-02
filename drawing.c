@@ -259,6 +259,52 @@ void draw(WorldData* tWorldData, CharacterData* tCharacterData){
 	stopDrawing();
 }
 
+void drawTitleBackground(TitleData* tTitleData){
+	debugLog("Draw Title background");
+	
+	TextureData textureData = getTitleTexture();
+
+	RectangleI tTexturePosition;
+	
+	tTexturePosition.topLeft.x = 0;
+	tTexturePosition.topLeft.y = 0;
+	tTexturePosition.bottomRight.x = textureData.textureSize.x-1;
+	tTexturePosition.bottomRight.y = textureData.textureSize.y-1;
+
+	Position pos;
+	pos.x = 0;
+	pos.y = 0;
+
+	drawSprite(textureData.texture, pos, BACKGROUND_POSITION_Z, textureData.textureSize, tTexturePosition, tTitleData->tiltAngle);
+}
+
+void drawPressStart(TitleData* tTitleData){
+	debugLog("Draw Title background");
+	
+	TextureData textureData = getPressStartTexture();
+
+	RectangleI tTexturePosition;
+	
+	tTexturePosition.topLeft.x = 0;
+	tTexturePosition.topLeft.y = 0;
+	tTexturePosition.bottomRight.x = textureData.textureSize.x-1;
+	tTexturePosition.bottomRight.y = textureData.textureSize.y-1;
+
+	Position pos;
+	pos.x = PRESS_START_X;
+	pos.y = PRESS_START_Y;
+
+	drawSprite(textureData.texture, pos, CHARACTER_POSITION_Z, textureData.textureSize, tTexturePosition, tTitleData->tiltAngle);
+}
+
+void drawTitle(TitleData* tTitleData){
+	debugLog("Begin drawing title");
+	startDrawing();
+	drawTitleBackground(tTitleData);
+	drawPressStart(tTitleData);
+	stopDrawing();
+}
+
 void waitForScreen(){
 	debugLog("Wait for screen");	
 	pvr_wait_ready();
