@@ -18,7 +18,7 @@ clean:
 	-rm -f $(TARGET).BIN
 	-rm -f $(SOURCE_PKGS)
 	-rm -f assets/sprites/*.pkg
-	-rm -f assets/romdisk_boot/*.pkg
+	-rm -f romdisk_boot/sprites/*.pkg
 	-rm -f romdisk.img
 
 $(TARGET).elf: $(OBJS) 
