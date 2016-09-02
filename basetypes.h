@@ -6,7 +6,7 @@
 typedef enum {
 	RETURN_NORMAL,
 	RETURN_TO_MENU,
-	RETURN_WON,
+	RETURN_WON, //TODO: rename to _WIN
 	RETURN_LOSS
 } GameReturnType;
 

@@ -8,4 +8,7 @@ int hasPressedLeft();
 int hasPressedRight();
 int hasPressedAbort();
 
+int hasPressedAbortFlank();
+int hasPressedStartFlank();
+
 #endif
