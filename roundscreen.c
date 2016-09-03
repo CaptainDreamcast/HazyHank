@@ -4,6 +4,7 @@
 #include "round.h"
 #include "animation.h"
 #include "input.h"
+#include "texture.h"
 
 #define TEXT_POSITION_Z 2
 
@@ -40,7 +41,7 @@ void initialize(){
 	memset(&gRoundData, 0, sizeof gRoundData);
 
 	sprintf(roundScreenText, "Round: %d", getRound());
-	setFont("/rd/fonts/dolmexica.fnt");
+	setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
 
 	gRoundData.screenShown = 300;
 	gRoundData.textPosition.x = 200;

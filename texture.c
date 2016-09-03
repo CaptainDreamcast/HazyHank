@@ -118,23 +118,19 @@ TextureData getPressStartTexture(){
 #define FONT_CHARACTER_AMOUNT 91
 
 int isFontDataLoaded;
-TextureData gFontData;
+TextureData gFont;
 FontCharacterData gFontCharacterData[FONT_CHARACTER_AMOUNT];
 
 void unloadFont(){
 	if(!isFontDataLoaded) return;
 
-	unloadTexture(gFontData);
+	unloadTexture(gFont);
 	memset(gFontCharacterData, 0, sizeof gFontCharacterData);
 
 	isFontDataLoaded = 0;
 }
 
-void setFont(char tFileDir[]){
-	if(isFontDataLoaded){
-		unloadFont();
-	}
-
+void loadFontHeader(char tFileDir[]) {
 	file_t file;
 
 	file = fileOpen(tFileDir, O_RDONLY);
@@ -145,12 +141,25 @@ void setFont(char tFileDir[]){
 	}
 
 	fileClose(file);
+}
+
+void loadFontTexture(char tFileDir[]){
+	loadTexture(tFileDir, &gFont.texture, &gFont.textureSize);
+}
+
+void setFont(char tFileDirHeader[], char tFileDirTexture[]){
+	if(isFontDataLoaded){
+		unloadFont();
+	}
+
+	loadFontHeader(tFileDirHeader);
+	loadFontTexture(tFileDirTexture);
 
 	isFontDataLoaded = 1;
 }
 
 TextureData getFontTexture(){
-	return gFontData;
+	return gFont;
 }
 
 FontCharacterData getFontCharacterData(char tChar){

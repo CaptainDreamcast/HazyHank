@@ -12,6 +12,7 @@ build_images:
 	$(KOS_BASE)/utils/kmgenc/kmgenc -a4 $(wildcard assets/sprites/*.png)
 	tools/KOMPRESSOR/kompressor $(wildcard assets/sprites/*.kmg)
 	cp assets/sprites/*.pkg romdisk_boot/sprites
+	cp assets/fonts/* romdisk_boot/fonts
 
 clean:
 	-rm -f $(TARGET).elf $(OBJS)
@@ -19,6 +20,8 @@ clean:
 	-rm -f $(SOURCE_PKGS)
 	-rm -f assets/sprites/*.pkg
 	-rm -f romdisk_boot/sprites/*.pkg
+	-rm -f romdisk_boot/fonts/*.hdr
+	-rm -f romdisk_boot/fonts/*.pkg
 	-rm -f romdisk.img
 
 $(TARGET).elf: $(OBJS) 
