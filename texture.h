@@ -11,6 +11,13 @@ typedef struct{
 	TextureSize textureSize;
 } TextureData;
 
+typedef struct { // TODO: refactor completely from Dolmexica
+	float filePositionX1;
+	float filePositionY1;
+	float filePositionX2;
+	float filePositionY2;
+} FontCharacterData;
+
 void loadAllTextures();
 void unloadAllTextures();
  
@@ -21,6 +28,7 @@ TextureData getCharacterTexture(int tFrame);
 TextureData getEnemyTexture(int tFrame);
 TextureData getExitTexture();
 TextureData getPlatformTexture();
-
+TextureData getFontTexture();
+FontCharacterData getFontCharacterData(char tChar);
 
 #endif

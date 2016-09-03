@@ -1,6 +1,8 @@
 #include "texture.h"
 
 #include "pkg.h"
+#include "file.h"
+
 #include "log.h"
 
 TextureData gBackground;
@@ -112,4 +114,53 @@ TextureData getTitleTexture(){
 TextureData getPressStartTexture(){
 	return gPressStart;
 }
+
+#define FONT_CHARACTER_AMOUNT 91
+
+int isFontDataLoaded;
+TextureData gFontData;
+FontCharacterData gFontCharacterData[FONT_CHARACTER_AMOUNT];
+
+void unloadFont(){
+	if(!isFontDataLoaded) return;
+
+	unloadTexture(gFontData);
+	memset(gFontCharacterData, 0, sizeof gFontCharacterData);
+
+	isFontDataLoaded = 0;
+}
+
+void setFont(char tFileDir[]){
+	if(isFontDataLoaded){
+		unloadFont();
+	}
+
+	file_t file;
+
+	file = fileOpen(tFileDir, O_RDONLY);
+	fileSeek(file, 0, 0);
+	int i;
+	for(i = 0; i < FONT_CHARACTER_AMOUNT; i++) {
+		fileRead(file, &gFontCharacterData[i], sizeof gFontCharacterData[i]);
+	}
+
+	fileClose(file);
+
+	isFontDataLoaded = 1;
+}
+
+TextureData getFontTexture(){
+	return gFontData;
+}
+
+FontCharacterData getFontCharacterData(char tChar){
+	int i;
+	if(tChar < ' ' || tChar > 'z') i = 0;
+	else i = tChar-' ';
+
+	return gFontCharacterData[i];
+}
+
+
+
 

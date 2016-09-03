@@ -5,10 +5,14 @@
 #include "animation.h"
 #include "input.h"
 
+#define TEXT_POSITION_Z 2
+
 typedef struct{
 	Duration now;
 	Duration screenShown;
 	Position textPosition;
+	Size1 textSize;
+	Color textColor;
 } RoundScreenData;
 
 RoundScreenData gRoundData;
@@ -25,7 +29,7 @@ GameReturnType roundLogic(){
 		return RETURN_WON;
 	}
 
-	drawText(roundScreenText, gRoundData.textPosition);
+	drawText(roundScreenText, gRoundData.textPosition, TEXT_POSITION_Z, gRoundData.textSize, gRoundData.textColor);
 
 	waitForScreen();
 
@@ -36,11 +40,13 @@ void initialize(){
 	memset(&gRoundData, 0, sizeof gRoundData);
 
 	sprintf(roundScreenText, "Round: %d", getRound());
-	setFont("/fonts/dolmexica.fnt");
+	setFont("/rd/fonts/dolmexica.fnt");
 
 	gRoundData.screenShown = 300;
 	gRoundData.textPosition.x = 200;
 	gRoundData.textPosition.y = 200;
+	gRoundData.textSize = 30;
+	gRoundData.textColor = COLOR_WHITE;
 }
 
 
