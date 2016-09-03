@@ -30,7 +30,9 @@ GameReturnType roundLogic(){
 		return RETURN_WON;
 	}
 
+	startDrawing();
 	drawText(roundScreenText, gRoundData.textPosition, TEXT_POSITION_Z, gRoundData.textSize, gRoundData.textColor);
+	stopDrawing();
 
 	waitForScreen();
 
@@ -43,7 +45,7 @@ void initialize(){
 	sprintf(roundScreenText, "Round: %d", getRound());
 	setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
 
-	gRoundData.screenShown = 300;
+	gRoundData.screenShown = 60;
 	gRoundData.textPosition.x = 200;
 	gRoundData.textPosition.y = 200;
 	gRoundData.textSize = 30;

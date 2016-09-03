@@ -18,5 +18,7 @@ void draw(WorldData* tWorldData, CharacterData* tCharacterData);
 void drawTitle(TitleData* tTitleData);
 void waitForScreen();
 void drawText(char tText[], Position tPosition, int tZ, int tSize, Color tColor);
+void startDrawing();
+void stopDrawing();
 
 #endif
