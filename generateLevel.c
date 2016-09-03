@@ -5,10 +5,13 @@
 #include <string.h>
 #include <math.h>
 
+#include <tari/log.h>
+#include <tari/math.h>
+#include <tari/physics.h>
+
 #include "basedefinitions.h"
 #include "texture.h"
-#include "tmath.h"
-#include "log.h"
+#include "state.h"
 
 WorldData* gWorldData;
 
@@ -64,7 +67,7 @@ int impossibleToPlaceEnemy(int y, int x){
 
 	int i;
 	for(i = 0; i < gWorldData->enemyAmount; i++){
-		if(gWorldData->enemies[i].position.x == TileToRealPositionX(x) && gWorldData->enemies[i].position.y == TileToRealPositionY(y)){
+		if(gWorldData->enemies[i].physics.mPosition.x == TileToRealPositionX(x) && gWorldData->enemies[i].physics.mPosition.y == TileToRealPositionY(y)){
 			return 0;
 		}
 	}
@@ -81,16 +84,14 @@ void placeEnemy(int y, int x){
 	int id = gWorldData->enemyAmount-1;
 
 	gWorldData->enemies[id].isRemoved = 0;
-	gWorldData->enemies[id].position.x = pX;
-	gWorldData->enemies[id].position.y = pY;
+	gWorldData->enemies[id].physics.mPosition.x = pX;
+	gWorldData->enemies[id].physics.mPosition.y = pY;
+	gWorldData->enemies[id].physics.mPosition.z = ENEMY_POSITION_Z;
 	gWorldData->enemies[id].runAccel = ENEMY_RUN_ACCEL;
-	gWorldData->enemies[id].frame = 0;
-	gWorldData->enemies[id].velocity.x = 0;
-	gWorldData->enemies[id].velocity.y = 0;
-	gWorldData->enemies[id].frameAmount = ENEMY_FRAME_AMOUNT;
-	gWorldData->enemies[id].animationTicks = 0;
-	gWorldData->enemies[id].animationTickAmount = 30;
-	gWorldData->enemies[id].state = ENEMY_WALKING;
+	gWorldData->enemies[id].animation.mFrameAmount = ENEMY_FRAME_AMOUNT;
+	gWorldData->enemies[id].animation.mDuration = 30;
+	changeEnemyState(&gWorldData->enemies[id], ENEMY_WALKING);
+	resetAnimation(&gWorldData->enemies[id].animation);
 }
 
 void generateEnemies(){
@@ -138,11 +139,12 @@ int impossibleToPlaceExit(int y, int x){
 	return gWorldData->tiles[y][x] != TILE_PLATFORM;
 }
 
-PositionI exitPositionTile;
+TilePosition exitPositionTile;
 
 void placeExit(int y, int x){
 	gWorldData->exitPosition.x = TileToRealPositionX(x);
 	gWorldData->exitPosition.y = TileToRealPositionY(y);
+	gWorldData->exitPosition.z = EXIT_POSITION_Z;
 
 	exitPositionTile.x = x;	
 	exitPositionTile.y = y;
@@ -217,6 +219,15 @@ int isNotPlayable(){
 	return(!vis[exitPositionTile.y][exitPositionTile.x]);
 }
 
+void generateGravity(){
+	log("Generate gravity");
+	Gravity grav;
+	grav.x = 0;
+	grav.y = -GRAVITY;
+	grav.z = 0;
+	setGravity(grav);
+}
+
 void generateLevel(WorldData* tWorldData){
 	log("Generate Level");
 	gWorldData = tWorldData;
@@ -232,4 +243,6 @@ void generateLevel(WorldData* tWorldData){
 		generateEnemies();
 		generateExit();
 	} while(isNotPlayable());
+
+	generateGravity();
 }

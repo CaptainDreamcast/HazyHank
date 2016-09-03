@@ -1,10 +1,11 @@
 #include "roundscreen.h"
 
-#include "drawing.h"
+#include <tari/drawing.h>
+#include <tari/animation.h>
+#include <tari/input.h>
+#include <tari/texture.h>
+
 #include "round.h"
-#include "animation.h"
-#include "input.h"
-#include "texture.h"
 
 #define TEXT_POSITION_Z 2
 
@@ -12,7 +13,7 @@ typedef struct{
 	Duration now;
 	Duration screenShown;
 	Position textPosition;
-	Size1 textSize;
+	TextSize textSize;
 	Color textColor;
 } RoundScreenData;
 
@@ -21,7 +22,7 @@ char roundScreenText[100];
 
 GameReturnType roundLogic(){
 	
-	getInput();
+	updateInput();
 	if(hasPressedAbortFlank()){
 		return RETURN_TO_MENU;
 	}
@@ -31,7 +32,7 @@ GameReturnType roundLogic(){
 	}
 
 	startDrawing();
-	drawText(roundScreenText, gRoundData.textPosition, TEXT_POSITION_Z, gRoundData.textSize, gRoundData.textColor);
+	drawText(roundScreenText, gRoundData.textPosition, gRoundData.textSize, gRoundData.textColor);
 	stopDrawing();
 
 	waitForScreen();
@@ -48,6 +49,7 @@ void initialize(){
 	gRoundData.screenShown = 60;
 	gRoundData.textPosition.x = 200;
 	gRoundData.textPosition.y = 200;
+	gRoundData.textPosition.z = TEXT_POSITION_Z;
 	gRoundData.textSize = 30;
 	gRoundData.textColor = COLOR_WHITE;
 }
@@ -61,7 +63,6 @@ GameReturnType roundScreen(){
 	while(1){
 		returnType = roundLogic();
 		if(returnType != RETURN_NORMAL) break;
-
 	}
 
 	return returnType;

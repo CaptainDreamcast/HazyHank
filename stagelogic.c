@@ -2,9 +2,11 @@
 
 #include <stdlib.h>
 
-#include "input.h"
+#include <tari/log.h>
+#include <tari/input.h>
+
 #include "collision.h"
-#include "log.h"
+
 
 int NO_TILT = 0;
 
@@ -12,8 +14,8 @@ void checkExit(WorldData* tWorldData, CharacterData* tCharacterData){
 	int exitTileX = RealPositionToTileX(tWorldData->exitPosition.x);
 	int exitTileY = RealPositionToTileWitoutPlatformY(tWorldData->exitPosition.y);
 	
-	int pTileX = RealPositionToTileX(tCharacterData->position.x);
-	int pTileY = RealPositionToTileWitoutPlatformY(tCharacterData->position.y);
+	int pTileX = RealPositionToTileX(tCharacterData->physics.mPosition.x);
+	int pTileY = RealPositionToTileWitoutPlatformY(tCharacterData->physics.mPosition.y);
 
 	if(exitTileX == pTileX && exitTileY == pTileY){
 		tWorldData->state = GAME_WON;
@@ -62,7 +64,7 @@ void handleScreenTilting(WorldData* tWorldData, CharacterData* tCharacterData){
 }
 
 GameReturnType checkGameAbort(WorldData* tWorldData, CharacterData* tCharacterData){
-	if(hasPressedAbort()){
+	if(hasPressedAbortFlank()){
 		return RETURN_TO_MENU;
 	} else if(tWorldData->state == GAME_WON){
 		return RETURN_WON;

@@ -2,6 +2,8 @@
 #define ENEMYDATA_H
 
 #include <kos.h>
+#include <tari/physics.h>
+#include <tari/animation.h>
 
 #include "basetypes.h"
 
@@ -17,15 +19,10 @@ typedef enum {
 typedef struct{
 
 	int isRemoved;
-	Position position;
-	Frame frame;
-	Velocity velocity;
-	Acceleration acceleration;
-	Frame frameAmount;
+	PhysicsObject physics;
+	Animation animation;
 	double runAccel;
 	EnemyState state;
-	AnimationTick animationTicks;
-	AnimationTick animationTickAmount;
 	FaceDirection faceDirection;
 
 } EnemyData;

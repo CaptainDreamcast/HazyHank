@@ -1,9 +1,9 @@
 #include "movement.h"
 
-#include "input.h"
-#include "state.h"
+#include <tari/input.h>
+#include <tari/log.h>
 
-#include "log.h"
+#include "state.h"
 
 #define CHARACTER_JUMPING_ACCEL	15.0
 
@@ -12,15 +12,15 @@ int characterCanJump(CharacterData* tCharacterData){
 }
 
 int isJumpingInvoluntarily(CharacterData* tCharacterData){
-	return (tCharacterData->state == CHARACTER_STANDING || tCharacterData->state == CHARACTER_WALKING) && tCharacterData->velocity.y != 0;
+	return (tCharacterData->state == CHARACTER_STANDING || tCharacterData->state == CHARACTER_WALKING) && tCharacterData->physics.mVelocity.y != 0;
 }
 
 
 void checkJumpingCharacter(WorldData* tWorldData, CharacterData* tCharacterData){
 	if(tCharacterData->state == CHARACTER_DYING) return;
 
-	if(hasPressedJump() && characterCanJump(tCharacterData)){
-		tCharacterData->acceleration.y += CHARACTER_JUMPING_ACCEL;
+	if(hasPressedAFlank() && characterCanJump(tCharacterData)){
+		tCharacterData->physics.mAcceleration.y += CHARACTER_JUMPING_ACCEL;
 		changeCharacterState(tCharacterData, CHARACTER_JUMPING);
 	} else if(isJumpingInvoluntarily(tCharacterData)){
 		changeCharacterState(tCharacterData, CHARACTER_JUMPING);
@@ -28,7 +28,7 @@ void checkJumpingCharacter(WorldData* tWorldData, CharacterData* tCharacterData)
 }
 
 void move(CharacterData* tCharacterData, int tMultiplier, FaceDirection tFaceDirection){
-	tCharacterData->acceleration.x = tMultiplier*CHARACTER_RUN_ACCEL;
+	tCharacterData->physics.mAcceleration.x = tMultiplier*CHARACTER_RUN_ACCEL;
 	tCharacterData->faceDirection = tFaceDirection;
 	if(tCharacterData->state != CHARACTER_JUMPING && tCharacterData->state != CHARACTER_WALKING){
 		changeCharacterState(tCharacterData, CHARACTER_WALKING);
@@ -62,24 +62,24 @@ int isMovingLeft(EnemyData* tEnemyData){
 #define RIGHT_BORDER_THRESHOLD 0
 
 int isOnLeftPlatformBorder(EnemyData* tEnemyData){
-	int positionInTile = ((int)tEnemyData->position.x) % TILE_SIZE;
+	int positionInTile = ((int)tEnemyData->physics.mPosition.x) % TILE_SIZE;
 	return positionInTile < LEFT_BORDER_THRESHOLD;
 }
 int isOnRightPlatformBorder(EnemyData* tEnemyData){
-	int positionInTile = ((int)tEnemyData->position.x) % TILE_SIZE;
+	int positionInTile = ((int)tEnemyData->physics.mPosition.x) % TILE_SIZE;
 	return positionInTile > RIGHT_BORDER_THRESHOLD;
 }
 
 
 int hasNoPlatformToTheLeft(WorldData* tWorldData, EnemyData* tEnemyData){
-	int tX = RealPositionToTileX(tEnemyData->position.x);
-	int tY = RealPositionToTileWitoutPlatformY(tEnemyData->position.y);
+	int tX = RealPositionToTileX(tEnemyData->physics.mPosition.x);
+	int tY = RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
 
 	return (tX == 0 || tWorldData->tiles[tY][tX-1] == TILE_EMPTY);
 }
 int hasNoPlatformToTheRight(WorldData* tWorldData, EnemyData* tEnemyData){
-	int tX = RealPositionToTileX(tEnemyData->position.x);
-	int tY = RealPositionToTileWitoutPlatformY(tEnemyData->position.y);
+	int tX = RealPositionToTileX(tEnemyData->physics.mPosition.x);
+	int tY = RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
 
 	return (tX == (MAX_TILES_X-1) || tWorldData->tiles[tY][tX+1] == TILE_EMPTY);
 }
@@ -99,10 +99,10 @@ void turnRight(EnemyData* tEnemyData){
 }
 
 void moveLeft(EnemyData* tEnemyData){
-	tEnemyData->acceleration.x = -ENEMY_RUN_ACCEL;
+	tEnemyData->physics.mAcceleration.x = -ENEMY_RUN_ACCEL;
 }
 void moveRight(EnemyData* tEnemyData){
-	tEnemyData->acceleration.x = ENEMY_RUN_ACCEL;
+	tEnemyData->physics.mAcceleration.x = ENEMY_RUN_ACCEL;
 }
 
 void checkSingleEnemyMovement(WorldData* tWorldData, EnemyData* tEnemyData){
