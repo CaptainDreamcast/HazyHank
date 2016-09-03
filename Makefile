@@ -17,7 +17,6 @@ build_images:
 clean:
 	-rm -f $(TARGET).elf $(OBJS)
 	-rm -f $(TARGET).BIN
-	-rm -f $(SOURCE_PKGS)
 	-rm -f assets/sprites/*.pkg
 	-rm -f romdisk_boot/sprites/*.pkg
 	-rm -f romdisk_boot/fonts/*.hdr

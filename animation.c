@@ -39,4 +39,3 @@ int handleDurationAndCheckIfOver(Duration* tNow, Duration tDuration){
 	return 0;
 }
 
-

@@ -13,3 +13,4 @@ void handleEnemyAnimation(WorldData* tWorldData, CharacterData* tCharacterData);
 void resetCharacterAnimation(CharacterData* tCharacterData);
 
 #endif
+
