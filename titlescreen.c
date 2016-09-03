@@ -1,11 +1,12 @@
 #include "titlescreen.h"
 
+#include <tari/log.h>
+#include <tari/input.h>
+#include <tari/math.h>
+#include <tari/drawing.h>
+
 #include "titledata.h"
 #include "drawing.h"
-#include "input.h"
-#include "tmath.h"
-
-#include "log.h"
 
 #define TITLE_TILT_ACCELERATION 0.001
 #define TITLE_TILT_VELOCITY_MAX	0.02
@@ -40,7 +41,7 @@ GameReturnType checkDone(){
 }
 
 GameReturnType title(){
-	getInput();
+	updateInput();
 	if(hasPressedAbortFlank()) {
 		return RETURN_TO_MENU;
 	}

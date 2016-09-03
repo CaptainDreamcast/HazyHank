@@ -1,9 +1,8 @@
 #include "state.h"
 
-#include "animation.h"
+#include <tari/log.h>
 
-#define DEBUG
-#include "log.h"
+#include "animation.h"
 
 void changeCharacterState(CharacterData* tCharacterData, CharacterState tNewState){
 	debugLog("Changing state char");

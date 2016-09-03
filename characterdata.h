@@ -2,6 +2,8 @@
 #define CHARACTERDATA_H
 
 #include <kos.h>
+#include <tari/physics.h>
+#include <tari/animation.h>
 
 #include "basetypes.h"
 
@@ -14,15 +16,12 @@ typedef enum {
 
 typedef struct {
 
-	Position position;
-	Frame frame;
-	Velocity velocity;
-	Acceleration acceleration;
+	PhysicsObject physics;
+	Animation animation;
 	Frame frameAmount[4];
+	Duration animationDuration[4];
 	double runAccel;
-	CharacterState state;
-	AnimationTick animationTicks;
-	AnimationTick animationTickAmount[4];
+	CharacterState state;	
 	FaceDirection faceDirection;
 
 } CharacterData;

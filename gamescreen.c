@@ -1,6 +1,9 @@
 #include "gamescreen.h"
 
-#include "input.h"
+#include <tari/drawing.h>
+#include <tari/log.h>
+#include <tari/input.h>
+
 #include "physics.h"
 #include "collision.h"
 #include "movement.h"
@@ -8,12 +11,10 @@
 #include "animation.h"
 #include "drawing.h"
 
-#include "log.h"
-
 GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData){
 	draw(tWorldData, tCharacterData);
 
-	getInput();
+	updateInput();
 
 	checkCollisionsPlatforms(tWorldData, tCharacterData);
 	checkCollisionsEnemies(tWorldData, tCharacterData);

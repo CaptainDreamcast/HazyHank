@@ -1,41 +1,23 @@
 #include "animation.h"
 
-void handleSingleAnimation(Frame* tFrame, Frame tFrameAmount, AnimationTick* tAnimationTicks, AnimationTick tAnimationTickAmount){
-
-	(*tAnimationTicks)++;
-
-	if(*tAnimationTicks >= tAnimationTickAmount){
-		(*tAnimationTicks) = 0;
-		(*tFrame)++;
-		if(*tFrame >= tFrameAmount){
-			(*tFrame) = 0;
-		}
-	}
-}
+#include <tari/animation.h>
 
 void handleCharacterAnimation(WorldData* tWorldData, CharacterData* tCharacterData){
 	CharacterState st = tCharacterData->state;
-	handleSingleAnimation(&tCharacterData->frame, tCharacterData->frameAmount[st], &tCharacterData->animationTicks, tCharacterData->animationTickAmount[st]);
+	// TODO: move to state change
+	tCharacterData->animation.mFrameAmount = tCharacterData->frameAmount[st];
+	tCharacterData->animation.mDuration = tCharacterData->animationDuration[st];
+
+	animate(&tCharacterData->animation);
 }
 
 void handleEnemyAnimation(WorldData* tWorldData, CharacterData* tCharacterData){
 	int i;
 	for(i = 0; i < tWorldData->enemyAmount; i++){
-		handleSingleAnimation(&tWorldData->enemies[i].frame, tWorldData->enemies[i].frameAmount, &tWorldData->enemies[i].animationTicks, tWorldData->enemies[i].animationTickAmount);
+		animate(&tWorldData->enemies[i].animation);
 	}
 }
 
 void resetCharacterAnimation(CharacterData* tCharacterData){
-	tCharacterData->frame = 0;
-	tCharacterData->animationTicks = 0;
+	resetAnimation(&tCharacterData->animation);
 }
-
-int handleDurationAndCheckIfOver(Duration* tNow, Duration tDuration){
-	(*tNow)++;
-	if((*tNow) >= tDuration){
-		return 1;
-	}
-
-	return 0;
-}
-

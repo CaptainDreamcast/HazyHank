@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <tari/log.h>
+
 #include "worlddata.h"
 #include "characterdata.h"
 #include "loadgame.h"
@@ -8,8 +10,6 @@
 #include "titlescreen.h"
 #include "round.h"
 #include "roundscreen.h"
-
-#include "log.h"
 
 WorldData worldData;
 CharacterData characterData;
