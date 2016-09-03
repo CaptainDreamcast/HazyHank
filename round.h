@@ -3,5 +3,6 @@
 
 void resetRound();
 void increaseRound();
+int getRound();
 
 #endif

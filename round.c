@@ -10,3 +10,7 @@ void increaseRound(){
 	gRound++;
 }
 
+int getRound(){
+	return gRound;
+}
+
