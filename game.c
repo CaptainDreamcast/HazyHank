@@ -24,11 +24,13 @@ GameReturnType gameLogic(){
 		if(returnType != RETURN_WON){
 			resetRound();
 			returnType = titleScreen();
-		} else {
-			increaseRound();
-			returnType = roundScreen();
+			if(returnType == RETURN_TO_MENU) break;
 		}
+		
+		increaseRound();
+		returnType = roundScreen();
 		if(returnType == RETURN_TO_MENU) break;
+
 		memset(&worldData, 0, sizeof worldData);
 		memset(&characterData, 0, sizeof characterData);
 		loadGame(&worldData, &characterData);

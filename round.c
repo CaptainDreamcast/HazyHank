@@ -3,7 +3,7 @@
 int gRound;
 
 void resetRound(){
-	gRound = 1;
+	gRound = 0;
 }
 
 void increaseRound(){
