@@ -1,6 +1,6 @@
 TARGET = 1ST_READ
 OBJS = romdisk.o main.o game.o gamescreen.o loadgame.o generateLevel.o input.o physics.o collision.o state.o animation.o \
-movement.o stagelogic.o drawing.o texture.o titlescreen.o \
+movement.o stagelogic.o drawing.o texture.o titlescreen.o round.o roundscreen.o \
 quicklz.o pkg.o pvr.o
 OPTFLAGS=-O3 -fomit-frame-pointer -fno-delayed-branch -DDREAMCAST -Wall -Werror
 KOS_CFLAGS+= $(OPTFLAGS)
@@ -12,13 +12,15 @@ build_images:
 	$(KOS_BASE)/utils/kmgenc/kmgenc -a4 $(wildcard assets/sprites/*.png)
 	tools/KOMPRESSOR/kompressor $(wildcard assets/sprites/*.kmg)
 	cp assets/sprites/*.pkg romdisk_boot/sprites
+	cp assets/fonts/* romdisk_boot/fonts
 
 clean:
 	-rm -f $(TARGET).elf $(OBJS)
 	-rm -f $(TARGET).BIN
-	-rm -f $(SOURCE_PKGS)
 	-rm -f assets/sprites/*.pkg
 	-rm -f romdisk_boot/sprites/*.pkg
+	-rm -f romdisk_boot/fonts/*.hdr
+	-rm -f romdisk_boot/fonts/*.pkg
 	-rm -f romdisk.img
 
 $(TARGET).elf: $(OBJS) 

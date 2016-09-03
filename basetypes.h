@@ -26,6 +26,7 @@ typedef struct {
 	int y;
 } Vector2DI;
 
+typedef double Size1;
 typedef Vector2D Position;
 typedef Vector2D Velocity;
 typedef Vector2D Acceleration;

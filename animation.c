@@ -30,5 +30,12 @@ void resetCharacterAnimation(CharacterData* tCharacterData){
 	tCharacterData->animationTicks = 0;
 }
 
+int handleDurationAndCheckIfOver(Duration* tNow, Duration tDuration){
+	(*tNow)++;
+	if((*tNow) >= tDuration){
+		return 1;
+	}
 
+	return 0;
+}
 

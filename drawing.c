@@ -310,3 +310,90 @@ void waitForScreen(){
 	pvr_wait_ready();
 	debugLog("Wait for screen done");
 }
+
+
+void getRGBFromColor(Color tColor, double* tR, double* tG, double* tB){
+	if(tColor == COLOR_BLACK) { 
+		(*tR) = (*tG) = (*tB) = 0;
+	}
+	else if(tColor == COLOR_RED){ 
+		(*tR) = 1.0f; 
+		(*tG) = (*tB) = 0;}
+	else if(tColor == COLOR_GREEN){ 
+		(*tG) = 1.0f; 
+		(*tR) = (*tB) = 0;
+	}
+	else if(tColor == COLOR_BLUE){ 
+		(*tB) = 1.0f; 
+		(*tG) = (*tR) = 0;
+	}
+	else if(tColor == COLOR_YELLOW){ 
+		(*tG) = (*tR) = 1.0f; 
+		(*tB) = 0;
+	}
+	else { 
+		(*tR) = (*tG) = (*tB) = 1.0f;
+	}
+}
+
+
+void drawText(char tText[], Position tPosition, int tZ, int tSize, Color tColor){
+
+	pvr_poly_cxt_t cxt;
+	pvr_poly_hdr_t hdr;
+	pvr_vertex_t vert;
+
+	int current = 0;
+
+	double r, g, b;
+	getRGBFromColor(tColor, &r, &g, &b);
+
+	TextureData fontData = getFontTexture();
+	pvr_poly_cxt_txr(&cxt, PVR_LIST_TR_POLY, PVR_TXRFMT_ARGB4444, fontData.textureSize.x, fontData.textureSize.y, fontData.texture, PVR_FILTER_BILINEAR);
+
+	pvr_poly_compile(&hdr, &cxt);
+	pvr_prim(&hdr, sizeof(hdr));
+
+	while(tText[current] != '\0'){
+
+		FontCharacterData charData = getFontCharacterData(tText[current]);
+
+		vert.argb = PVR_PACK_COLOR(1.0f, r, g, b);
+		vert.oargb = 0;
+		vert.flags = PVR_CMD_VERTEX;		
+
+		vert.x = tPosition.x;
+		vert.y = tPosition.y;
+		vert.z = tZ;
+		vert.u = charData.filePositionX1;
+		vert.v = charData.filePositionY1;
+		pvr_prim(&vert, sizeof(vert));
+
+		vert.x = tPosition.x+tSize;
+		vert.y = tPosition.y;
+		vert.z = tZ;
+		vert.u = charData.filePositionX2;
+		vert.v = charData.filePositionY1;
+		pvr_prim(&vert, sizeof(vert));
+
+		vert.x = tPosition.x;
+		vert.y = tPosition.y+tSize;
+		vert.z = tZ;
+		vert.u = charData.filePositionX1;
+		vert.v = charData.filePositionY2;
+		pvr_prim(&vert, sizeof(vert));
+
+		vert.x = tPosition.x+tSize;
+		vert.y = tPosition.y+tSize;
+		vert.z = tZ;
+		vert.u = charData.filePositionX2;
+		vert.v = charData.filePositionY2;
+		vert.flags = PVR_CMD_VERTEX_EOL;
+		pvr_prim(&vert, sizeof(vert));
+
+		tPosition.x+=tSize;
+		current++;
+	}
+
+}
+
