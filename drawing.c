@@ -19,7 +19,7 @@ double inverseScreenY(double y){
 double getDrawY(double y, Rectangle tTexturePosition){
 	double sizeY = tTexturePosition.bottomRight.y-tTexturePosition.topLeft.y;
 
-	return inverseScreenY(y-sizeY);
+	return inverseScreenY(y+sizeY);
 }
 
 void updateTiltingMatrix(double tTiltAngle){
@@ -116,6 +116,7 @@ void drawPlatforms(WorldData* tWorldData){
 				Position position;
 				position.x = TileToRealPositionX(i);
 				position.y = TileToRealPositionWithoutPlatformY(j);
+				position.y = getDrawY(position.y, tTexturePosition);
 				position.z = PLATFORM_POSITION_Z;
 
 				drawSprite(textureData, position, tTexturePosition);
@@ -136,7 +137,10 @@ void drawExit(WorldData* tWorldData){
 	tTexturePosition.bottomRight.x = textureData.mTextureSize.x-1;
 	tTexturePosition.bottomRight.y = textureData.mTextureSize.y-1;
 
-	drawSprite(textureData, tWorldData->exitPosition, tTexturePosition);
+	Position pos = tWorldData->exitPosition;
+	pos.y = getDrawY(pos.y, tTexturePosition);
+
+	drawSprite(textureData, pos, tTexturePosition);
 }
 
 void draw(WorldData* tWorldData, CharacterData* tCharacterData){

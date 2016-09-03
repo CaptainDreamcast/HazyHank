@@ -7,6 +7,7 @@
 
 #include <tari/log.h>
 #include <tari/math.h>
+#include <tari/physics.h>
 
 #include "basedefinitions.h"
 #include "texture.h"
@@ -218,6 +219,15 @@ int isNotPlayable(){
 	return(!vis[exitPositionTile.y][exitPositionTile.x]);
 }
 
+void generateGravity(){
+	log("Generate gravity");
+	Gravity grav;
+	grav.x = 0;
+	grav.y = -GRAVITY;
+	grav.z = 0;
+	setGravity(grav);
+}
+
 void generateLevel(WorldData* tWorldData){
 	log("Generate Level");
 	gWorldData = tWorldData;
@@ -233,4 +243,6 @@ void generateLevel(WorldData* tWorldData){
 		generateEnemies();
 		generateExit();
 	} while(isNotPlayable());
+
+	generateGravity();
 }

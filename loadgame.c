@@ -1,5 +1,6 @@
 #include "loadgame.h"
 
+#include <tari/physics.h>
 #include <tari/log.h>
 
 #include "generateLevel.h"
@@ -32,7 +33,7 @@ void loadCharacter(WorldData* tWorldData, CharacterData* tCharacterData){
 	tCharacterData->animationDuration[CHARACTER_JUMPING] = CHARACTER_TICK_AMOUNT_JUMPING;
 	tCharacterData->animationDuration[CHARACTER_DYING] = CHARACTER_TICK_AMOUNT_DYING;
 	changeCharacterState(tCharacterData, CHARACTER_STANDING);
-	resetAnimation(&tCharacterData->animation);
+	resetAnimation(&tCharacterData->animation);	
 }
 
 void loadGame(WorldData* worldData, CharacterData* characterData){

@@ -112,11 +112,13 @@ void checkCollisionsEnemyAndPlatforms(WorldData* tWorldData, EnemyData* tEnemyDa
 // TODO: move
 void killEnemy(CharacterData* tCharacterData, EnemyData* tEnemyData){
 	changeEnemyState(tEnemyData, ENEMY_DYING);
-	tCharacterData->physics.mAcceleration.y = 6;
+	tCharacterData->physics.mVelocity.y = 0;
+	tCharacterData->physics.mAcceleration.y = 10;
 
 }
 
 void killPlayer(CharacterData* tCharData){
+	tCharData->physics.mVelocity.y = 0;
 	tCharData->physics.mAcceleration.y = 10;
 	changeCharacterState(tCharData, CHARACTER_DYING);
 }
