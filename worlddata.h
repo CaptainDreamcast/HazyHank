@@ -7,14 +7,14 @@
 #include "basedefinitions.h"
 
 typedef enum {
-	TILE_EMPTY,
-	TILE_PLATFORM
+  TILE_EMPTY,
+  TILE_PLATFORM
 } TileType;
 
-typedef enum{
-	GAME_RUNNING,
-	GAME_WON,
-	GAME_OVER
+typedef enum {
+  GAME_RUNNING,
+  GAME_WON,
+  GAME_OVER
 } WorldState;
 
 #define TileToRealPositionX(x)			(x*TILE_SIZE)
@@ -24,16 +24,16 @@ typedef enum{
 #define RealPositionToTileY(y)			((y-PLATFORM_SIZE_Y)/TILE_SIZE)
 #define RealPositionToTileWitoutPlatformY(y)	(y/TILE_SIZE)
 
-typedef struct{
+typedef struct {
 
-	TileType tiles[MAX_TILES_Y][MAX_TILES_X];
-	uint32_t enemyAmount;
-	EnemyData enemies[MAX_ENEMY_AMOUNT];
-	Position exitPosition;
-	Position startPosition;
-	double tiltVelocity;
-	double tiltAngle;
-	WorldState state;
+  TileType tiles[MAX_TILES_Y][MAX_TILES_X];
+  uint32_t enemyAmount;
+  EnemyData enemies[MAX_ENEMY_AMOUNT];
+  Position exitPosition;
+  Position startPosition;
+  double tiltVelocity;
+  double tiltAngle;
+  WorldState state;
 
 } WorldData;
 

@@ -14,29 +14,32 @@
 WorldData worldData;
 CharacterData characterData;
 
-GameReturnType gameLogic(){
+GameReturnType gameLogic() {
 
-	log("Enter game logic");
-	GameReturnType returnType = RETURN_NORMAL;
-	loadAllTextures();
+  log("Enter game logic");
+  GameReturnType returnType = RETURN_NORMAL;
+  loadAllTextures();
 
-	while(1){
-		if(returnType != RETURN_WON){
-			resetRound();
-			returnType = titleScreen();
-			if(returnType == RETURN_TO_MENU) break;
-		}
-		
-		increaseRound();
-		returnType = roundScreen();
-		if(returnType == RETURN_TO_MENU) break;
+  while (1) {
+    if (returnType != RETURN_WON) {
+      resetRound();
+      returnType = titleScreen();
+      if (returnType == RETURN_TO_MENU)
+        break;
+    }
 
-		memset(&worldData, 0, sizeof worldData);
-		memset(&characterData, 0, sizeof characterData);
-		loadGame(&worldData, &characterData);
-		returnType = gameScreen(&worldData, &characterData);
-		if(returnType == RETURN_TO_MENU) break;
-	}
-	unloadAllTextures();
-	return returnType;
+    increaseRound();
+    returnType = roundScreen();
+    if (returnType == RETURN_TO_MENU)
+      break;
+
+    memset(&worldData, 0, sizeof worldData);
+    memset(&characterData, 0, sizeof characterData);
+    loadGame(&worldData, &characterData);
+    returnType = gameScreen(&worldData, &characterData);
+    if (returnType == RETURN_TO_MENU)
+      break;
+  }
+  unloadAllTextures();
+  return returnType;
 }

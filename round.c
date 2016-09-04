@@ -2,15 +2,15 @@
 
 int gRound;
 
-void resetRound(){
-	gRound = 0;
+void resetRound() {
+  gRound = 0;
 }
 
-void increaseRound(){
-	gRound++;
+void increaseRound() {
+  gRound++;
 }
 
-int getRound(){
-	return gRound;
+int getRound() {
+  return gRound;
 }
 

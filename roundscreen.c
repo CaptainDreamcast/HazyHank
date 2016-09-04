@@ -9,62 +9,62 @@
 
 #define TEXT_POSITION_Z 2
 
-typedef struct{
-	Duration now;
-	Duration screenShown;
-	Position textPosition;
-	TextSize textSize;
-	Color textColor;
+typedef struct {
+  Duration now;
+  Duration screenShown;
+  Position textPosition;
+  TextSize textSize;
+  Color textColor;
 } RoundScreenData;
 
 RoundScreenData gRoundData;
 char roundScreenText[100];
 
-GameReturnType roundLogic(){
-	
-	updateInput();
-	if(hasPressedAbortFlank()){
-		return RETURN_TO_MENU;
-	}
+GameReturnType roundLogic() {
 
-	if(handleDurationAndCheckIfOver(&gRoundData.now, gRoundData.screenShown)){
-		return RETURN_WON;
-	}
+  updateInput();
+  if (hasPressedAbortFlank()) {
+    return RETURN_TO_MENU;
+  }
 
-	startDrawing();
-	drawText(roundScreenText, gRoundData.textPosition, gRoundData.textSize, gRoundData.textColor);
-	stopDrawing();
+  if (handleDurationAndCheckIfOver(&gRoundData.now, gRoundData.screenShown)) {
+    return RETURN_WON;
+  }
 
-	waitForScreen();
+  startDrawing();
+  drawText(roundScreenText, gRoundData.textPosition, gRoundData.textSize, gRoundData.textColor);
+  stopDrawing();
 
-	return RETURN_NORMAL;
+  waitForScreen();
+
+  return RETURN_NORMAL;
 }
 
-void initialize(){
-	memset(&gRoundData, 0, sizeof gRoundData);
+void initialize() {
+  memset(&gRoundData, 0, sizeof gRoundData);
 
-	sprintf(roundScreenText, "Round: %d", getRound());
-	setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
+  sprintf(roundScreenText, "Round: %d", getRound());
+  setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
 
-	gRoundData.screenShown = 60;
-	gRoundData.textPosition.x = 200;
-	gRoundData.textPosition.y = 200;
-	gRoundData.textPosition.z = TEXT_POSITION_Z;
-	gRoundData.textSize = 30;
-	gRoundData.textColor = COLOR_WHITE;
+  gRoundData.screenShown = 60;
+  gRoundData.textPosition.x = 200;
+  gRoundData.textPosition.y = 200;
+  gRoundData.textPosition.z = TEXT_POSITION_Z;
+  gRoundData.textSize = 30;
+  gRoundData.textColor = COLOR_WHITE;
 }
 
+GameReturnType roundScreen() {
 
-GameReturnType roundScreen(){
+  initialize();
 
-	initialize();
+  GameReturnType returnType;
+  while (1) {
+    returnType = roundLogic();
+    if (returnType != RETURN_NORMAL)
+      break;
+  }
 
-	GameReturnType returnType;
-	while(1){
-		returnType = roundLogic();
-		if(returnType != RETURN_NORMAL) break;
-	}
-
-	return returnType;
+  return returnType;
 }
 

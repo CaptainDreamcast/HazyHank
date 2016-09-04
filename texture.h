@@ -9,7 +9,7 @@
 
 void loadAllTextures();
 void unloadAllTextures();
- 
+
 TextureData getTitleTexture();
 TextureData getPressStartTexture();
 TextureData getBackgroundTexture();
