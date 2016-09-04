@@ -18,21 +18,21 @@ uint32_t useRomDisk = 1;
 
 #define DEVELOP
 
-int main(){
+int main() {
 
-	initiatePVR();
-	initPhysics();
+  initiatePVR();
+  initPhysics();
 
-	log("Begin game routine");
-	GameReturnType returnType = gameLogic();
+  log("Begin game routine");
+  GameReturnType returnType = gameLogic();
 
-	if(returnType == RETURN_TO_MENU) {
-		#ifdef DEVELOP
-			arch_exit();
-		#else
-			arch_menu();
-		#endif
-	}
+  if (returnType == RETURN_TO_MENU) {
+#ifdef DEVELOP
+    arch_exit();
+#else
+    arch_menu();
+#endif
+  }
 
-	return(1);
+  return (1);
 }

@@ -11,49 +11,50 @@
 #include "animation.h"
 #include "drawing.h"
 
-GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData){
-	draw(tWorldData, tCharacterData);
+GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData) {
+  draw(tWorldData, tCharacterData);
 
-	updateInput();
+  updateInput();
 
-	checkCollisionsPlatforms(tWorldData, tCharacterData);
-	checkCollisionsEnemies(tWorldData, tCharacterData);
+  checkCollisionsPlatforms(tWorldData, tCharacterData);
+  checkCollisionsEnemies(tWorldData, tCharacterData);
 
-	checkJumpingCharacter(tWorldData, tCharacterData);
-	checkRunningCharacter(tWorldData, tCharacterData);
-	checkMovementEnemies(tWorldData, tCharacterData);
+  checkJumpingCharacter(tWorldData, tCharacterData);
+  checkRunningCharacter(tWorldData, tCharacterData);
+  checkMovementEnemies(tWorldData, tCharacterData);
 
-	handlePhysicsForCharacter(tWorldData, tCharacterData);
-	handlePhysicsForEnemies(tWorldData, tCharacterData);
+  handlePhysicsForCharacter(tWorldData, tCharacterData);
+  handlePhysicsForEnemies(tWorldData, tCharacterData);
 
-	checkGameOver(tWorldData, tCharacterData);
-	checkExit(tWorldData, tCharacterData);
-	handleScreenTilting(tWorldData, tCharacterData);
+  checkGameOver(tWorldData, tCharacterData);
+  checkExit(tWorldData, tCharacterData);
+  handleScreenTilting(tWorldData, tCharacterData);
 
-	GameReturnType currentGameReturnStatus = checkGameAbort(tWorldData, tCharacterData);
-	debugInteger(currentGameReturnStatus);
-	if(currentGameReturnStatus != RETURN_NORMAL){
-		return currentGameReturnStatus;
-	}
-	
-	handleCharacterAnimation(tWorldData, tCharacterData);
-	handleEnemyAnimation(tWorldData, tCharacterData);
+  GameReturnType currentGameReturnStatus = checkGameAbort(tWorldData, tCharacterData);
+  debugInteger(currentGameReturnStatus);
+  if (currentGameReturnStatus != RETURN_NORMAL) {
+    return currentGameReturnStatus;
+  }
 
-	waitForScreen();
+  handleCharacterAnimation(tWorldData, tCharacterData);
+  handleEnemyAnimation(tWorldData, tCharacterData);
 
-	return RETURN_NORMAL;
+  waitForScreen();
+
+  return RETURN_NORMAL;
 }
 
-GameReturnType gameScreen(WorldData* tWorldData, CharacterData* tCharacterData){
+GameReturnType gameScreen(WorldData* tWorldData, CharacterData* tCharacterData) {
 
-	log("Enter game screen");
-	GameReturnType returnType;
-	while(1){
-		debugLog("Start game loop");
-		returnType = gameLoop(tWorldData, tCharacterData);
-		if(returnType != RETURN_NORMAL) break;
-	}
+  log("Enter game screen");
+  GameReturnType returnType;
+  while (1) {
+    debugLog("Start game loop");
+    returnType = gameLoop(tWorldData, tCharacterData);
+    if (returnType != RETURN_NORMAL)
+      break;
+  }
 
-	return returnType;
+  return returnType;
 }
 

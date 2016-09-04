@@ -6,5 +6,4 @@
 
 GameReturnType gameScreen(WorldData* worldData, CharacterData* characterData);
 
-
 #endif

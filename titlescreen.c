@@ -13,61 +13,60 @@
 
 TitleData gTitleData;
 
-void calculateTilt(){
-	gTitleData.tiltVelocity += gTitleData.tiltAcceleration;
+void calculateTilt() {
+  gTitleData.tiltVelocity += gTitleData.tiltAcceleration;
 
-	if(gTitleData.tiltVelocity > TITLE_TILT_VELOCITY_MAX) {
-		gTitleData.tiltVelocity = TITLE_TILT_VELOCITY_MAX;	
-	}
-	else if(gTitleData.tiltVelocity < -TITLE_TILT_VELOCITY_MAX) {
-		gTitleData.tiltVelocity = -TITLE_TILT_VELOCITY_MAX;
-	}	
-	gTitleData.tiltAngle += gTitleData.tiltVelocity;
+  if (gTitleData.tiltVelocity > TITLE_TILT_VELOCITY_MAX) {
+    gTitleData.tiltVelocity = TITLE_TILT_VELOCITY_MAX;
+  } else if (gTitleData.tiltVelocity < -TITLE_TILT_VELOCITY_MAX) {
+    gTitleData.tiltVelocity = -TITLE_TILT_VELOCITY_MAX;
+  }
+  gTitleData.tiltAngle += gTitleData.tiltVelocity;
 
-	debugDouble(gTitleData.tiltAngle);
-	if(	(gTitleData.tiltAngle < -0.5 && gTitleData.tiltAcceleration < 0) || 	
-		(gTitleData.tiltAngle > 0.5 && gTitleData.tiltAcceleration > 0)) { 
-		debugLog("switch tilt direction");
-		gTitleData.tiltAcceleration *= -1;
-	}
+  debugDouble(gTitleData.tiltAngle);
+  if ((gTitleData.tiltAngle < -0.5 && gTitleData.tiltAcceleration < 0) || (gTitleData.tiltAngle > 0.5 && gTitleData.tiltAcceleration > 0)) {
+    debugLog("switch tilt direction");
+    gTitleData.tiltAcceleration *= -1;
+  }
 }
 
-GameReturnType checkDone(){
-	if(hasPressedStartFlank()){
-		return RETURN_WON;
-	}	
+GameReturnType checkDone() {
+  if (hasPressedStartFlank()) {
+    return RETURN_WON;
+  }
 
-	return RETURN_NORMAL;
+  return RETURN_NORMAL;
 }
 
-GameReturnType title(){
-	updateInput();
-	if(hasPressedAbortFlank()) {
-		return RETURN_TO_MENU;
-	}
+GameReturnType title() {
+  updateInput();
+  if (hasPressedAbortFlank()) {
+    return RETURN_TO_MENU;
+  }
 
-	drawTitle(&gTitleData);
-	GameReturnType returnType = checkDone();
-	calculateTilt();
+  drawTitle(&gTitleData);
+  GameReturnType returnType = checkDone();
+  calculateTilt();
 
-	waitForScreen();
+  waitForScreen();
 
-	return returnType;
+  return returnType;
 }
 
-void initiateTitle(){
-	gTitleData.tiltAcceleration = TITLE_TILT_ACCELERATION;
+void initiateTitle() {
+  gTitleData.tiltAcceleration = TITLE_TILT_ACCELERATION;
 }
 
-GameReturnType titleScreen(){
-	memset(&gTitleData, 0, sizeof gTitleData);
-	initiateTitle();
+GameReturnType titleScreen() {
+  memset(&gTitleData, 0, sizeof gTitleData);
+  initiateTitle();
 
-	GameReturnType returnType;
-	while(1){
-		returnType = title();
-		if(returnType != RETURN_NORMAL) break;
-	}
+  GameReturnType returnType;
+  while (1) {
+    returnType = title();
+    if (returnType != RETURN_NORMAL)
+      break;
+  }
 
-	return returnType;
+  return returnType;
 }

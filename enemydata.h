@@ -9,21 +9,21 @@
 
 typedef enum {
 
-	ENEMY_WALKING,
-	ENEMY_DYING
+  ENEMY_WALKING,
+  ENEMY_DYING
 
 } EnemyState;
 
 #define ENEMY_TEXTURE_AMOUNT 2
 
-typedef struct{
+typedef struct {
 
-	int isRemoved;
-	PhysicsObject physics;
-	Animation animation;
-	double runAccel;
-	EnemyState state;
-	FaceDirection faceDirection;
+  int isRemoved;
+  PhysicsObject physics;
+  Animation animation;
+  double runAccel;
+  EnemyState state;
+  FaceDirection faceDirection;
 
 } EnemyData;
 
