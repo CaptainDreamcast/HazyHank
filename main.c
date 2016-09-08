@@ -16,9 +16,7 @@ KOS_INIT_ROMDISK(romdisk);
 
 uint32_t useRomDisk = 1;
 
-//Main Function.
-
-#define DEVELOP
+// #define DEVELOP
 
 void exitGame() {
 #ifdef DEVELOP
