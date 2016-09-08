@@ -31,14 +31,14 @@ GameReturnType gameLogic() {
     increaseRound();
     returnType = roundScreen();
     if (returnType == RETURN_TO_MENU)
-      break;
+      continue;
 
     memset(&worldData, 0, sizeof worldData);
     memset(&characterData, 0, sizeof characterData);
     loadGame(&worldData, &characterData);
     returnType = gameScreen(&worldData, &characterData);
     if (returnType == RETURN_TO_MENU)
-      break;
+      continue;
   }
   unloadAllTextures();
   return returnType;
