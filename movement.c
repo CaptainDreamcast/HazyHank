@@ -71,14 +71,14 @@ int isOnRightPlatformBorder(EnemyData* tEnemyData) {
 }
 
 int hasNoPlatformToTheLeft(WorldData* tWorldData, EnemyData* tEnemyData) {
-  int tX = RealPositionToTileX(tEnemyData->physics.mPosition.x);
-  int tY = RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
+  int tX = (int)RealPositionToTileX(tEnemyData->physics.mPosition.x);
+  int tY = (int)RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
 
   return (tX == 0 || tWorldData->tiles[tY][tX - 1] == TILE_EMPTY);
 }
 int hasNoPlatformToTheRight(WorldData* tWorldData, EnemyData* tEnemyData) {
-  int tX = RealPositionToTileX(tEnemyData->physics.mPosition.x);
-  int tY = RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
+  int tX = (int)RealPositionToTileX(tEnemyData->physics.mPosition.x);
+  int tY = (int)RealPositionToTileWitoutPlatformY(tEnemyData->physics.mPosition.y);
 
   return (tX == (MAX_TILES_X - 1) || tWorldData->tiles[tY][tX + 1] == TILE_EMPTY);
 }
@@ -124,7 +124,7 @@ void checkSingleEnemyMovement(WorldData* tWorldData, EnemyData* tEnemyData) {
 void checkMovementEnemies(WorldData* tWorldData, CharacterData* tCharacterData) {
 
   int i;
-  for (i = 0; i < tWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)tWorldData->enemyAmount; i++) {
     debugLog("Movement enemy");
     debugInteger(i);
     debugInteger(tWorldData->enemies[i].state);

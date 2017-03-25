@@ -1,7 +1,6 @@
 #ifndef ENEMYDATA_H
 #define ENEMYDATA_H
 
-#include <kos.h>
 #include <tari/physics.h>
 #include <tari/animation.h>
 

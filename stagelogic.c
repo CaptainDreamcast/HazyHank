@@ -10,11 +10,11 @@
 int NO_TILT = 0;
 
 void checkExit(WorldData* tWorldData, CharacterData* tCharacterData) {
-  int exitTileX = RealPositionToTileX(tWorldData->exitPosition.x);
-  int exitTileY = RealPositionToTileWitoutPlatformY(tWorldData->exitPosition.y);
+  int exitTileX = (int)RealPositionToTileX(tWorldData->exitPosition.x);
+  int exitTileY = (int)RealPositionToTileWitoutPlatformY(tWorldData->exitPosition.y);
 
-  int pTileX = RealPositionToTileX((tCharacterData->physics.mPosition.x+(TILE_SIZE/2)));
-  int pTileY = RealPositionToTileWitoutPlatformY(tCharacterData->physics.mPosition.y);
+  int pTileX = (int)RealPositionToTileX((tCharacterData->physics.mPosition.x+(TILE_SIZE/2)));
+  int pTileY = (int)RealPositionToTileWitoutPlatformY(tCharacterData->physics.mPosition.y);
 
   if (exitTileX == pTileX && exitTileY == pTileY) {
     tWorldData->state = GAME_WON;

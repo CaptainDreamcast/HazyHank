@@ -5,6 +5,12 @@
 
 #include "state.h"
 
+static void swapF(double* x, double* y) {
+	double z = *x;
+	*x = *y;
+	*y = z;
+}
+
 CollisionRect getPlatformRectangle(int y, int x) {
 
   Position pos;
@@ -18,6 +24,8 @@ CollisionRect getPlatformRectangle(int y, int x) {
   rect.mBottomRight.y = pos.y;
   rect.mTopLeft.y = pos.y + PLATFORM_SIZE_Y;
 
+  swapF(&rect.mBottomRight.y, &rect.mTopLeft.y);
+
   return rect;
 }
 
@@ -29,6 +37,8 @@ CollisionRect getCharacterRectangleFromPosition(Position tPos) {
   rect.mBottomRight.x = tPos.x + CHARACTER_SIZE_X;
   rect.mBottomRight.y = tPos.y;
   rect.mTopLeft.y = tPos.y + CHARACTER_SIZE_Y;
+
+  swapF(&rect.mBottomRight.y, &rect.mTopLeft.y);
 
   return rect;
 }
@@ -130,6 +140,7 @@ void checkCollisionsEnemyAndPlayer(WorldData* tWorldData, EnemyData* tEnemyData,
   CollisionRect charRect = getCharacterRectangleFromPosition(tCharacterData->physics.mPosition);
   CollisionRect enemyRect = getCharacterRectangleFromPosition(tEnemyData->physics.mPosition);
 
+
   if (checkCollision(charRect, enemyRect)) {
     int isKillingEnemy = comingFromAbove(charRect, enemyRect, tCharacterData->physics.mVelocity);
 
@@ -144,7 +155,7 @@ void checkCollisionsEnemyAndPlayer(WorldData* tWorldData, EnemyData* tEnemyData,
 
 void checkCollisionsEnemies(WorldData* tWorldData, CharacterData* tCharacterData) {
   int i;
-  for (i = 0; i < tWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)tWorldData->enemyAmount; i++) {
     if (tWorldData->enemies[i].state != ENEMY_DYING) {
       checkCollisionsEnemyAndPlatforms(tWorldData, &tWorldData->enemies[i]);
       checkCollisionsEnemyAndPlayer(tWorldData, &tWorldData->enemies[i], tCharacterData);

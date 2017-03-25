@@ -18,7 +18,7 @@ WorldData* gWorldData;
 void placePlatform(int y, int x, size_t size) {
 
   int i;
-  for (i = x; i < x + size; i++) {
+  for (i = x; i < (int)(x + size); i++) {
     gWorldData->tiles[y][i] = TILE_PLATFORM;
   }
 }
@@ -32,7 +32,7 @@ int impossibleToPlacePlatform(int y, int x) {
 
 void generatePlatforms() {
 
-  log("Generate Platforms");
+  logg("Generate Platforms");
 
   placePlatform(0, 0, MAX_TILES_X);
 
@@ -70,7 +70,7 @@ void generatePlatforms() {
 int impossibleToPlaceEnemy(int y, int x) {
 
   int i;
-  for (i = 0; i < gWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)gWorldData->enemyAmount; i++) {
     if (gWorldData->enemies[i].physics.mPosition.x == TileToRealPositionX(x) && gWorldData->enemies[i].physics.mPosition.y == TileToRealPositionY(y)) {
       return 0;
     }
@@ -99,7 +99,7 @@ void placeEnemy(int y, int x) {
 }
 
 void generateEnemies() {
-  log("Generate enemies");
+  logg("Generate enemies");
 
   int placedEnemies = 0;
 
@@ -155,7 +155,7 @@ void placeExit(int y, int x) {
 }
 
 void generateExit() {
-  log("Generate Exit");
+  logg("Generate Exit");
 
   int keepPlacingExit = 1;
   while (keepPlacingExit) {
@@ -213,11 +213,11 @@ void checkReachableRecursive(int y, int x) {
 }
 
 int isNotPlayable() {
-  log("Check playability");
+  logg("Check playability");
   memset(vis, 0, sizeof vis);
 
-  int y = RealPositionToTileY(gWorldData->startPosition.y);
-  int x = RealPositionToTileX(gWorldData->startPosition.x);
+  int y = (int)RealPositionToTileY(gWorldData->startPosition.y);
+  int x = (int)RealPositionToTileX(gWorldData->startPosition.x);
 
   checkReachableRecursive(y, x);
 
@@ -225,7 +225,7 @@ int isNotPlayable() {
 }
 
 void generateGravity() {
-  log("Generate gravity");
+  logg("Generate gravity");
   Gravity grav;
   grav.x = 0;
   grav.y = -GRAVITY;
@@ -234,9 +234,9 @@ void generateGravity() {
 }
 
 void generateLevel(WorldData* tWorldData) {
-  log("Generate Level");
+  logg("Generate Level");
   gWorldData = tWorldData;
-  srand(time(NULL));
+  srand((unsigned int)time(NULL));
   int attempt = 0;
   do {
     attempt++;

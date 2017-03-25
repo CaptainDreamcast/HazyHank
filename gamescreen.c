@@ -3,6 +3,7 @@
 #include <tari/drawing.h>
 #include <tari/log.h>
 #include <tari/input.h>
+#include <tari/system.h>
 
 #include "physics.h"
 #include "collision.h"
@@ -13,7 +14,7 @@
 
 GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData) {
   draw(tWorldData, tCharacterData);
-
+  updateSystem();
   updateInput();
 
   checkCollisionsPlatforms(tWorldData, tCharacterData);

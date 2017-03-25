@@ -22,7 +22,7 @@ void handlePhysicsForCharacter(WorldData* tWorldData, CharacterData* tCharacterD
 void handlePhysicsForEnemies(WorldData* tWorldData, CharacterData* tCharacterData) {
 
   int i;
-  for (i = 0; i < tWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)tWorldData->enemyAmount; i++) {
     handlePhysics(&tWorldData->enemies[i].physics);
     tWorldData->enemies[i].physics.mVelocity.x *= 0.5;  // TODO: find out better rule behind this and add to lib
   }
