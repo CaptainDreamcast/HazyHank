@@ -1,7 +1,6 @@
 #ifndef CHARACTERDATA_H
 #define CHARACTERDATA_H
 
-#include <kos.h>
 #include <tari/physics.h>
 #include <tari/animation.h>
 

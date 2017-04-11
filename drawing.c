@@ -2,14 +2,11 @@
 
 #include <stdlib.h>
 
-#include <kos.h>
-#include <dc/matrix3d.h>
 #include <tari/log.h>
 #include <tari/drawing.h>
+#include <tari/math.h>
 
 #include "texture.h"
-
-#define M_PI 3.14159
 
 double inverseScreenY(double y) {
   return (SCREEN_SIZE_Y - y);
@@ -30,10 +27,8 @@ void updateTiltingMatrix(double tTiltAngle) {
   float dy2 = -MIDDLE_OF_SCREEN_Y;
   float dz2 = 0;
 
-  mat_identity();
-  mat_translate(dx1, dy1, dz1);
-  mat_rotate_z(tTiltAngle);
-  mat_translate(dx2, dy2, dz2);
+  setDrawingParametersToIdentity();
+  setDrawingRotationZ(tTiltAngle, makePosition(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, 0));
 }
 
 void drawCharacter(WorldData* tWorldData, CharacterData* tCharacterData) {
@@ -57,7 +52,7 @@ void drawEnemies(WorldData* tWorldData) {
   debugLog("Draw enemies");
 
   int i;
-  for (i = 0; i < tWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)tWorldData->enemyAmount; i++) {
     FaceDirection faceDirection = tWorldData->enemies[i].faceDirection;
     TextureData textureData = getEnemyTexture(tWorldData->enemies[i].animation.mFrame);
 

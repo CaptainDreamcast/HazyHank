@@ -4,6 +4,7 @@
 #include <tari/input.h>
 #include <tari/math.h>
 #include <tari/drawing.h>
+#include <tari/system.h>
 
 #include "titledata.h"
 #include "drawing.h"
@@ -39,6 +40,7 @@ GameReturnType checkDone() {
 }
 
 GameReturnType title() {
+	updateSystem();
   updateInput();
   if (hasPressedAbortFlank()) {
     return RETURN_TO_MENU;

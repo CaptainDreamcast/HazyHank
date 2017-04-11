@@ -1,33 +1,44 @@
-#include <kos.h> 
-
-KOS_INIT_FLAGS(INIT_DEFAULT);
 
 #include <tari/log.h>
 #include <tari/pvr.h>
 #include <tari/physics.h>
 #include <tari/framerateselectscreen.h>
 #include <tari/drawing.h>
+#include <tari/system.h>
 
 #include "basetypes.h"
 #include "game.h"
+
+#ifdef DREAMCAST
+#include <kos.h>
+
+KOS_INIT_FLAGS(INIT_DEFAULT);
 
 extern uint8 romdisk[];
 KOS_INIT_ROMDISK(romdisk);
 
 uint32_t useRomDisk = 1;
 
+#endif
+
 // #define DEVELOP
 
 void exitGame() {
 #ifdef DEVELOP
-  arch_exit();
+  abortSystem();
 #else
-  arch_menu();
+  returnToMenu();
 #endif
 }
 
-int main() {
+int main(int argc, char** argv) {
+	(void)argc;
+	(void)argv;
 
+	setGameName("HAZY HANK");
+
+	initSystem();
+	initDrawing();
   initiatePVR();
   initPhysics();
 
@@ -45,5 +56,9 @@ int main() {
     exitGame();
   }
 
-  return (1);
+  return 0;
+}
+
+int wmain(int argc, char** argv) {
+	return main(argc, argv);
 }

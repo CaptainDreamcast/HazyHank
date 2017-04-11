@@ -1,8 +1,11 @@
 #include "roundscreen.h"
 
+#include <stdio.h>
+
 #include <tari/drawing.h>
 #include <tari/animation.h>
 #include <tari/input.h>
+#include <tari/system.h>
 #include <tari/texture.h>
 
 #include "round.h"
@@ -21,7 +24,7 @@ RoundScreenData gRoundData;
 char roundScreenText[100];
 
 GameReturnType roundLogic() {
-
+  updateSystem();
   updateInput();
   if (hasPressedAbortFlank()) {
     return RETURN_TO_MENU;

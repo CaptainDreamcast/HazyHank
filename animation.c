@@ -13,7 +13,7 @@ void handleCharacterAnimation(WorldData* tWorldData, CharacterData* tCharacterDa
 
 void handleEnemyAnimation(WorldData* tWorldData, CharacterData* tCharacterData) {
   int i;
-  for (i = 0; i < tWorldData->enemyAmount; i++) {
+  for (i = 0; i < (int)tWorldData->enemyAmount; i++) {
     animate(&tWorldData->enemies[i].animation);
   }
 }
