@@ -16,7 +16,7 @@ CharacterData characterData;
 
 GameReturnType gameLogic() {
 
-  log("Enter game logic");
+  logg("Enter game logic");
   GameReturnType returnType = RETURN_NORMAL;
   loadAllTextures();
 

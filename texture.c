@@ -11,51 +11,51 @@ TextureData gTitle;
 TextureData gPressStart;
 
 void loadWorldTextures() {
-  log("Load world textures");
+  logg("Load world textures");
   gBackground = loadTexturePKG("/rd/sprites/background.pkg");
   gPlatform = loadTexturePKG("/rd/sprites/platform.pkg");
   gExit = loadTexturePKG("/rd/sprites/exit.pkg");
 }
 
 void unloadWorldTextures() {
-  log("Unload world textures");
+  logg("Unload world textures");
   unloadTexture(gBackground);
   unloadTexture(gPlatform);
   unloadTexture(gExit);
 }
 
 void loadEnemyTextures() {
-  log("Load character textures");
+  logg("Load character textures");
   gEnemy[0] = loadTexturePKG("/rd/sprites/enemy1.pkg");
   gEnemy[1] = loadTexturePKG("/rd/sprites/enemy2.pkg");
 }
 
 void unloadEnemyTextures() {
-  log("Unload enemy textures");
+  logg("Unload enemy textures");
   unloadTexture(gEnemy[0]);
   unloadTexture(gEnemy[1]);
 }
 
 void loadCharacterTextures() {
-  log("Load character textures");
+  logg("Load character textures");
   gCharacter[0] = loadTexturePKG("/rd/sprites/char1.pkg");
   gCharacter[1] = loadTexturePKG("/rd/sprites/char2.pkg");
 }
 
 void unloadCharacterTextures() {
-  log("Unload character textures");
+  logg("Unload character textures");
   unloadTexture(gCharacter[0]);
   unloadTexture(gCharacter[1]);
 }
 
 void loadTitleTextures() {
-  log("Load title textures");
+  logg("Load title textures");
   gTitle = loadTexturePKG("/rd/sprites/title.pkg");
   gPressStart = loadTexturePKG("/rd/sprites/press_start.pkg");
 }
 
 void unloadTitleTextures() {
-  log("Unoad title textures");
+  logg("Unoad title textures");
   unloadTexture(gTitle);
   unloadTexture(gPressStart);
 }

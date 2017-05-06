@@ -19,14 +19,6 @@ double getDrawY(double y, Rectangle tTexturePosition) {
 }
 
 void updateTiltingMatrix(double tTiltAngle) {
-  float dx1 = MIDDLE_OF_SCREEN_X;
-  float dy1 = MIDDLE_OF_SCREEN_Y;
-  float dz1 = 0;
-
-  float dx2 = -MIDDLE_OF_SCREEN_X;
-  float dy2 = -MIDDLE_OF_SCREEN_Y;
-  float dz2 = 0;
-
   setDrawingParametersToIdentity();
   setDrawingRotationZ(tTiltAngle, makePosition(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, 0));
 }

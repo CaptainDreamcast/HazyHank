@@ -42,14 +42,14 @@ int main(int argc, char** argv) {
   initiatePVR();
   initPhysics();
 
-  log("Check framerate");
+  logg("Check framerate");
   setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
   FramerateSelectReturnType framerateReturnType = selectFramerate();
   if (framerateReturnType == FRAMERATE_SCREEN_RETURN_ABORT) {
     exitGame();
   }
 
-  log("Begin game routine");
+  logg("Begin game routine");
   GameReturnType returnType = gameLogic();
 
   if (returnType == RETURN_TO_MENU) {

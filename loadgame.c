@@ -19,7 +19,7 @@
 #define CHARACTER_TICK_AMOUNT_DYING 5
 
 void loadCharacter(WorldData* tWorldData, CharacterData* tCharacterData) {
-  log("Load character");
+  logg("Load character");
   tCharacterData->physics.mPosition.x = CHARACTER_START_POSITION_X;
   tCharacterData->physics.mPosition.y = CHARACTER_START_POSITION_Y;
   tCharacterData->physics.mPosition.z = CHARACTER_POSITION_Z;
@@ -37,7 +37,7 @@ void loadCharacter(WorldData* tWorldData, CharacterData* tCharacterData) {
 }
 
 void loadGame(WorldData* worldData, CharacterData* characterData) {
-  log("Begin loading game");
+  logg("Begin loading game");
   generateLevel(worldData);
   loadCharacter(worldData, characterData);
 }

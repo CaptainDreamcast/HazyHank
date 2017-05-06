@@ -47,7 +47,7 @@ GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData) {
 
 GameReturnType gameScreen(WorldData* tWorldData, CharacterData* tCharacterData) {
 
-  log("Enter game screen");
+  logg("Enter game screen");
   GameReturnType returnType;
   while (1) {
     debugLog("Start game loop");
