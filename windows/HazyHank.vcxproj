@@ -104,7 +104,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y DLL\* Release
+      <Command>copy /Y ..\..\addons\libtari\windows\vs15\DLL\* Release
 xcopy /Y /E /I ..\assets\fonts Release\fonts
 xcopy /Y /E /I ..\assets\sprites Release\sprites</Command>
     </PostBuildEvent>
