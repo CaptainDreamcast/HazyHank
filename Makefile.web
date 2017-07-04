@@ -1,0 +1,15 @@
+include Makefile.common
+
+all: complete
+
+complete: make_folder build_develop
+
+make_folder:
+	-mkdir web
+
+clean:
+	-rmdir /s /q web
+
+TARI_PATH = ..\addons\libtari
+ADDITIONAL_PRELOADS = --preload-file assets
+include ../addons/libtari/Makefile.commonweb

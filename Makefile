@@ -1,6 +1,7 @@
+include Makefile.common
+
+OBJS += romdisk.o
 TARGET = 1ST_READ
-OBJS = romdisk.o main.o game.o gamescreen.o loadgame.o generateLevel.o physics.o collision.o state.o animation.o \
-movement.o stagelogic.o drawing.o texture.o titlescreen.o round.o roundscreen.o
 OPTFLAGS=-O3 -fomit-frame-pointer -fno-delayed-branch -DDREAMCAST -Wall -Werror
 KOS_CFLAGS+= $(OPTFLAGS)
 KOS_ROMDISK_DIR = romdisk_boot

@@ -8,6 +8,11 @@ dc-tool_*
 *.pkg
 filesystem
 
+*.html
+*.html.mem
+*.data
+*.js
+
 windows/.vs/*
 windows/Release/*
 windows/Debug/*
