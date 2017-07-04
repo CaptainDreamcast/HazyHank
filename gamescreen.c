@@ -11,51 +11,58 @@
 #include "stagelogic.h"
 #include "animation.h"
 #include "drawing.h"
+#include "loadgame.h"
+#include "titlescreen.h"
+#include "roundscreen.h"
 
-GameReturnType gameLoop(WorldData* tWorldData, CharacterData* tCharacterData) {
-  draw(tWorldData, tCharacterData);
-  updateSystem();
-  updateInput();
+static WorldData gWorldData;
+static CharacterData gCharacterData;
 
-  checkCollisionsPlatforms(tWorldData, tCharacterData);
-  checkCollisionsEnemies(tWorldData, tCharacterData);
 
-  checkJumpingCharacter(tWorldData, tCharacterData);
-  checkRunningCharacter(tWorldData, tCharacterData);
-  checkMovementEnemies(tWorldData, tCharacterData);
+static void drawGameScreen() {
+	draw(&gWorldData, &gCharacterData);
+}
+  
 
-  handlePhysicsForCharacter(tWorldData, tCharacterData);
-  handlePhysicsForEnemies(tWorldData, tCharacterData);
+static void updateGameScreen() {
+	updateSystem();
+	updateInput();
 
-  checkGameOver(tWorldData, tCharacterData);
-  checkExit(tWorldData, tCharacterData);
-  handleScreenTilting(tWorldData, tCharacterData);
+	checkCollisionsPlatforms(&gWorldData, &gCharacterData);
+	checkCollisionsEnemies(&gWorldData, &gCharacterData);
 
-  GameReturnType currentGameReturnStatus = checkGameAbort(tWorldData, tCharacterData);
-  debugInteger(currentGameReturnStatus);
-  if (currentGameReturnStatus != RETURN_NORMAL) {
-    return currentGameReturnStatus;
-  }
+	checkJumpingCharacter(&gWorldData, &gCharacterData);
+	checkRunningCharacter(&gWorldData, &gCharacterData);
+	checkMovementEnemies(&gWorldData, &gCharacterData);
 
-  handleCharacterAnimation(tWorldData, tCharacterData);
-  handleEnemyAnimation(tWorldData, tCharacterData);
+	handlePhysicsForCharacter(&gWorldData, &gCharacterData);
+	handlePhysicsForEnemies(&gWorldData, &gCharacterData);
 
-  waitForScreen();
+	checkGameOver(&gWorldData, &gCharacterData);
+	checkExit(&gWorldData, &gCharacterData);
+	handleScreenTilting(&gWorldData, &gCharacterData);
 
-  return RETURN_NORMAL;
+	GameReturnType currentGameReturnStatus = checkGameAbort(&gWorldData, &gCharacterData);
+	debugInteger(currentGameReturnStatus);
+	if (currentGameReturnStatus == RETURN_LOSS || currentGameReturnStatus == RETURN_TO_MENU) {
+		setNewScreen(&TitleScreen);
+	}
+	else if (currentGameReturnStatus == RETURN_WON) {
+		setNewScreen(&RoundScreen);
+	}
+
+	handleCharacterAnimation(&gWorldData, &gCharacterData);
+	handleEnemyAnimation(&gWorldData, &gCharacterData);
 }
 
-GameReturnType gameScreen(WorldData* tWorldData, CharacterData* tCharacterData) {
-
-  logg("Enter game screen");
-  GameReturnType returnType;
-  while (1) {
-    debugLog("Start game loop");
-    returnType = gameLoop(tWorldData, tCharacterData);
-    if (returnType != RETURN_NORMAL)
-      break;
-  }
-
-  return returnType;
+static void loadGameScreen() {
+	memset(&gWorldData, 0, sizeof gWorldData);
+	memset(&gCharacterData, 0, sizeof gCharacterData);
+	loadGame(&gWorldData, &gCharacterData);
 }
 
+Screen GameScreen = {
+	.mLoad = loadGameScreen,
+	.mUpdate = updateGameScreen,
+	.mDraw = drawGameScreen,
+};

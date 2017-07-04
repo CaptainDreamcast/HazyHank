@@ -24,9 +24,6 @@
     <ClCompile Include="..\drawing.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\gamescreen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\enemydata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\gamescreen.h">

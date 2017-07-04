@@ -131,59 +131,10 @@ void drawExit(WorldData* tWorldData) {
 void draw(WorldData* tWorldData, CharacterData* tCharacterData) {
   debugLog("Begin drawing");
   updateTiltingMatrix(tWorldData->tiltAngle);
-  startDrawing();
   drawBackground(tWorldData);
   drawPlatforms(tWorldData);
   drawCharacter(tWorldData, tCharacterData);
   drawEnemies(tWorldData);
   drawExit(tWorldData);
-  stopDrawing();
 }
 
-void drawTitleBackground(TitleData* tTitleData) {
-  debugLog("Draw Title background");
-
-  TextureData textureData = getTitleTexture();
-
-  Rectangle tTexturePosition;
-
-  tTexturePosition.topLeft.x = 0;
-  tTexturePosition.topLeft.y = 0;
-  tTexturePosition.bottomRight.x = textureData.mTextureSize.x - 1;
-  tTexturePosition.bottomRight.y = textureData.mTextureSize.y - 1;
-
-  Position pos;
-  pos.x = 0;
-  pos.y = 0;
-  pos.z = BACKGROUND_POSITION_Z;
-
-  drawSprite(textureData, pos, tTexturePosition);
-}
-
-void drawPressStart(TitleData* tTitleData) {
-  debugLog("Draw Title background");
-
-  TextureData textureData = getPressStartTexture();
-
-  Rectangle tTexturePosition;
-  tTexturePosition.topLeft.x = 0;
-  tTexturePosition.topLeft.y = 0;
-  tTexturePosition.bottomRight.x = textureData.mTextureSize.x - 1;
-  tTexturePosition.bottomRight.y = textureData.mTextureSize.y - 1;
-
-  Position pos;
-  pos.x = PRESS_START_X;
-  pos.y = PRESS_START_Y;
-  pos.z = CHARACTER_POSITION_Z;
-
-  drawSprite(textureData, pos, tTexturePosition);
-}
-
-void drawTitle(TitleData* tTitleData) {
-  debugLog("Begin drawing title");
-  updateTiltingMatrix(tTitleData->tiltAngle);
-  startDrawing();
-  drawTitleBackground(tTitleData);
-  drawPressStart(tTitleData);
-  stopDrawing();
-}

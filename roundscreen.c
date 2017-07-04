@@ -9,6 +9,8 @@
 #include <tari/texture.h>
 
 #include "round.h"
+#include "titlescreen.h"
+#include "gamescreen.h"
 
 #define TEXT_POSITION_Z 2
 
@@ -23,31 +25,26 @@ typedef struct {
 RoundScreenData gRoundData;
 char roundScreenText[100];
 
-GameReturnType roundLogic() {
-  updateSystem();
-  updateInput();
-  if (hasPressedAbortFlank()) {
-    return RETURN_TO_MENU;
-  }
+static void updateRoundScreen() {
+	updateSystem();
+	updateInput();
+	if (hasPressedAbortFlank()) {
+		setNewScreen(&TitleScreen);
+	}
 
-  if (handleDurationAndCheckIfOver(&gRoundData.now, gRoundData.screenShown)) {
-    return RETURN_WON;
-  }
-
-  startDrawing();
-  drawText(roundScreenText, gRoundData.textPosition, gRoundData.textSize, gRoundData.textColor);
-  stopDrawing();
-
-  waitForScreen();
-
-  return RETURN_NORMAL;
+	if (handleDurationAndCheckIfOver(&gRoundData.now, gRoundData.screenShown)) {
+		setNewScreen(&GameScreen);
+	}
 }
 
-void initialize() {
+static void drawRoundScreen() {
+	drawText(roundScreenText, gRoundData.textPosition, gRoundData.textSize, gRoundData.textColor);
+}
+
+static void initialize() {
   memset(&gRoundData, 0, sizeof gRoundData);
 
   sprintf(roundScreenText, "Round: %d", getRound());
-  setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
 
   gRoundData.screenShown = 60;
   gRoundData.textPosition.x = 200;
@@ -57,17 +54,14 @@ void initialize() {
   gRoundData.textColor = COLOR_WHITE;
 }
 
-GameReturnType roundScreen() {
 
-  initialize();
-
-  GameReturnType returnType;
-  while (1) {
-    returnType = roundLogic();
-    if (returnType != RETURN_NORMAL)
-      break;
-  }
-
-  return returnType;
+static void loadRoundScreen() {
+	increaseRound();
+	initialize();
 }
 
+Screen RoundScreen = {
+	.mLoad = loadRoundScreen,
+	.mUpdate = updateRoundScreen,
+	.mDraw = drawRoundScreen,
+};

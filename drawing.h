@@ -6,7 +6,7 @@
 #include "titledata.h"
 
 void draw(WorldData* tWorldData, CharacterData* tCharacterData);
-void drawTitle(TitleData* tTitleData);
+void updateTiltingMatrix(double tTiltAngle);
 
 #endif
 

@@ -101,7 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>wmain</EntryPointSymbol>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y ..\..\addons\libtari\windows\vs15\DLL\* Release
@@ -126,7 +126,6 @@ xcopy /Y /E /I ..\assets\sprites Release\sprites</Command>
     <ClCompile Include="..\animation.c" />
     <ClCompile Include="..\collision.c" />
     <ClCompile Include="..\drawing.c" />
-    <ClCompile Include="..\game.c" />
     <ClCompile Include="..\gamescreen.c" />
     <ClCompile Include="..\generateLevel.c" />
     <ClCompile Include="..\loadgame.c" />
@@ -148,7 +147,6 @@ xcopy /Y /E /I ..\assets\sprites Release\sprites</Command>
     <ClInclude Include="..\collision.h" />
     <ClInclude Include="..\drawing.h" />
     <ClInclude Include="..\enemydata.h" />
-    <ClInclude Include="..\game.h" />
     <ClInclude Include="..\gamescreen.h" />
     <ClInclude Include="..\generateLevel.h" />
     <ClInclude Include="..\loadgame.h" />

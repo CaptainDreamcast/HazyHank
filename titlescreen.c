@@ -8,6 +8,9 @@
 
 #include "titledata.h"
 #include "drawing.h"
+#include "texture.h"
+#include "round.h"
+#include "roundscreen.h"
 
 #define TITLE_TILT_ACCELERATION 0.001
 #define TITLE_TILT_VELOCITY_MAX	0.02
@@ -31,44 +34,84 @@ void calculateTilt() {
   }
 }
 
-GameReturnType checkDone() {
-  if (hasPressedStartFlank()) {
-    return RETURN_WON;
-  }
+static void checkDone() {
 
-  return RETURN_NORMAL;
+  if (hasPressedStartFlank()) {
+	  setNewScreen(&RoundScreen);
+  }  
 }
 
-GameReturnType title() {
-	updateSystem();
+static void updateTitleScreen() {
+  updateSystem();
   updateInput();
   if (hasPressedAbortFlank()) {
-    return RETURN_TO_MENU;
+	  abortScreenHandling();
   }
 
-  drawTitle(&gTitleData);
-  GameReturnType returnType = checkDone();
+  checkDone();
   calculateTilt();
-
-  waitForScreen();
-
-  return returnType;
 }
 
-void initiateTitle() {
+static void drawTitleBackground(TitleData* tTitleData) {
+	debugLog("Draw Title background");
+
+	TextureData textureData = getTitleTexture();
+
+	Rectangle tTexturePosition;
+
+	tTexturePosition.topLeft.x = 0;
+	tTexturePosition.topLeft.y = 0;
+	tTexturePosition.bottomRight.x = textureData.mTextureSize.x - 1;
+	tTexturePosition.bottomRight.y = textureData.mTextureSize.y - 1;
+
+	Position pos;
+	pos.x = 0;
+	pos.y = 0;
+	pos.z = BACKGROUND_POSITION_Z;
+
+	drawSprite(textureData, pos, tTexturePosition);
+}
+
+static void drawPressStart(TitleData* tTitleData) {
+	debugLog("Draw Title background");
+
+	TextureData textureData = getPressStartTexture();
+
+	Rectangle tTexturePosition;
+	tTexturePosition.topLeft.x = 0;
+	tTexturePosition.topLeft.y = 0;
+	tTexturePosition.bottomRight.x = textureData.mTextureSize.x - 1;
+	tTexturePosition.bottomRight.y = textureData.mTextureSize.y - 1;
+
+	Position pos;
+	pos.x = PRESS_START_X;
+	pos.y = PRESS_START_Y;
+	pos.z = CHARACTER_POSITION_Z;
+
+	drawSprite(textureData, pos, tTexturePosition);
+}
+
+static void drawTitle() {
+	debugLog("Begin drawing title");
+	updateTiltingMatrix(gTitleData.tiltAngle);
+	drawTitleBackground(&gTitleData);
+	drawPressStart(&gTitleData);
+}
+
+
+static void initiateTitle() {
   gTitleData.tiltAcceleration = TITLE_TILT_ACCELERATION;
 }
 
-GameReturnType titleScreen() {
-  memset(&gTitleData, 0, sizeof gTitleData);
-  initiateTitle();
-
-  GameReturnType returnType;
-  while (1) {
-    returnType = title();
-    if (returnType != RETURN_NORMAL)
-      break;
-  }
-
-  return returnType;
+static void loadTitleScreen() {
+	resetRound();
+	memset(&gTitleData, 0, sizeof gTitleData);
+	initiateTitle();
 }
+
+
+Screen TitleScreen = {
+	.mLoad = loadTitleScreen,
+	.mUpdate = updateTitleScreen,
+	.mDraw = drawTitle,
+};

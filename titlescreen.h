@@ -1,8 +1,10 @@
 #ifndef TITLESCREEN_H
 #define TITLESCREEN_H
 
+#include <tari/wrapper.h>
+
 #include "basetypes.h"
 
-GameReturnType titleScreen();
+extern Screen TitleScreen;
 
 #endif

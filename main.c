@@ -5,9 +5,11 @@
 #include <tari/framerateselectscreen.h>
 #include <tari/drawing.h>
 #include <tari/system.h>
+#include <tari/wrapper.h>
 
 #include "basetypes.h"
-#include "game.h"
+#include "titlescreen.h"
+#include "texture.h"
 
 #ifdef DREAMCAST
 #include <kos.h>
@@ -37,10 +39,7 @@ int main(int argc, char** argv) {
 
 	setGameName("HAZY HANK");
 
-	initSystem();
-	initDrawing();
-  initiatePVR();
-  initPhysics();
+	initTariWrapperWithDefaultFlags();
 
   logg("Check framerate");
   setFont("/rd/fonts/dolmexica.hdr", "/rd/fonts/dolmexica.pkg");
@@ -50,11 +49,11 @@ int main(int argc, char** argv) {
   }
 
   logg("Begin game routine");
-  GameReturnType returnType = gameLogic();
+  loadAllTextures();
+  startScreenHandling(&TitleScreen);
 
-  if (returnType == RETURN_TO_MENU) {
-    exitGame();
-  }
+  unloadAllTextures();
+  exitGame();
 
   return 0;
 }
