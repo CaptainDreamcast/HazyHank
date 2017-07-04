@@ -1,2 +1,2 @@
-OBJS = main.o game.o gamescreen.o loadgame.o generateLevel.o physics.o collision.o state.o animation.o \
+OBJS = main.o gamescreen.o loadgame.o generateLevel.o physics.o collision.o state.o animation.o \
 movement.o stagelogic.o drawing.o texture.o titlescreen.o round.o roundscreen.o

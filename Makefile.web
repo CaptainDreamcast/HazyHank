@@ -11,5 +11,5 @@ clean:
 	-rmdir /s /q web
 
 TARI_PATH = ..\addons\libtari
-ADDITIONAL_PRELOADS = --preload-file assets
+ADDITIONAL_PRELOADS = --preload-file assets --preload-file assets\sprites@sprites
 include ../addons/libtari/Makefile.commonweb
